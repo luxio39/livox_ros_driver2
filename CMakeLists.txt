@@ -1,4 +1,4 @@
-# judge which cmake codes to use 
+# judge which cmake codes to use
 if($ENV{ROS_VERSION} STREQUAL "1")
 
   # Copyright(c) 2019 livoxtech limited.
