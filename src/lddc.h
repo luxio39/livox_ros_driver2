@@ -125,7 +125,7 @@ class Lddc final {
       uint32_t offset_time, uint32_t point_interval, uint32_t echo_num);
 
 #ifdef BUILDING_ROS2
-  PublisherPtr CreatePublisher(uint8_t msg_type, std::string &topic_name, uint32_t queue_size);
+  PublisherPtr CreatePublisher(uint8_t msg_type, std::string &topic_name, uint32_t queue_size, uint8_t handle);
 #endif
 
   PublisherPtr GetCurrentPublisher(uint8_t index);

@@ -333,4 +333,11 @@ else($ENV{ROS_VERSION} STREQUAL "2")
     launch_ROS2
   )
 
+  # set macro to exclude older distros, which lack publisher matched event support, from compiling with lazy publisher
+  if(NOT $ENV{ROS_DISTRO} MATCHES "^(foxy|galactic)$")
+    message(STATUS "ROS_DISTRO is $ENV{ROS_DISTRO} - enabling lazy publisher support")
+    #add_compile_definitions(ROS_SUPPORT_MATCHED_EVENTS)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE ROS_SUPPORT_MATCHED_EVENTS)
+  endif()
+
 endif()
