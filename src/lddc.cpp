@@ -531,25 +531,25 @@ std::shared_ptr<rclcpp::PublisherBase> Lddc::CreatePublisher(uint8_t msg_type, s
 #ifdef ROS_SUPPORT_MATCHED_EVENTS
     publisher_options.event_callbacks.matched_callback =
         [this, topic_name, handle](rclcpp::MatchedInfo &info) {
-            LivoxLidarWorkMode working_mode;
+            LivoxLidarWorkMode lidar_work_mode;
             if (info.current_count > 0) {
                 DRIVER_INFO(*this->cur_node_,
                     "Subscriber(s) matched on %s (count: %zu). Waking up sensor(s)...",
                     topic_name.c_str(),
                     info.current_count);
-                working_mode = kLivoxLidarNormal;
+                lidar_work_mode = kLivoxLidarNormal;
             } else {
                 DRIVER_INFO(*this->cur_node_,
                     "No subscribers on %s. Setting sensor(s) into standby...",
                     topic_name.c_str());
-                working_mode = kLivoxLidarWakeUp;
+                lidar_work_mode = kLivoxLidarWakeUp;
             }
 
             if (this->use_multi_topic_) {
-                SetLivoxLidarWorkMode(this->lds_->lidars_[handle].handle, working_mode, nullptr, nullptr);
+                SetLivoxLidarWorkMode(this->lds_->lidars_[handle].handle, lidar_work_mode, nullptr, nullptr);
             } else {
                 for (uint8_t i = 0; i < this->lds_->lidar_count_; i++) {
-                    SetLivoxLidarWorkMode(this->lds_->lidars_[i].handle, working_mode, nullptr, nullptr);
+                    SetLivoxLidarWorkMode(this->lds_->lidars_[i].handle, lidar_work_mode, nullptr, nullptr);
                 }
             }
         };
